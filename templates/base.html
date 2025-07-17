@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}College Portal{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+    .slide-fade-out {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    </style>
+</head>
+<body>
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ url_for('home') }}">🏫 College Portal</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      {% if session.get('username') and request.endpoint not in ['login', 'register'] %}
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item">
+            <span class="navbar-text me-3 text-white">
+              👤 {{ session['username']|capitalize }}
+            </span>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown">
+              ⚙️
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingsDropdown">
+              {% if session['role'] == 'student' %}
+                <li><a class="dropdown-item" href="{{ url_for('profile') }}">My Profile</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('change_password') }}">🔒 Change Password</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('stats') }}">My Stats</a></li>
+              {% elif session['role'] == 'faculty' %}
+                <li><a class="dropdown-item" href="#">📄 Profile</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('change_password') }}">🔒 Change Password</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('faculty_dashboard') }}">📊 Dashboard</a></li>
+              {% endif %}
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{{ url_for('logout') }}">🚪 Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      {% else %}
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('login') }}">🔐 Login</a>
+          </li>
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Flash Messages ===== -->
+<div class="container mt-3">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+
+<!-- ===== Page Content ===== -->
+<main class="container my-4 flex-grow-1">
+    {% block content %}{% endblock %}
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="bg-light text-center py-3 mt-auto">
+    <small class="text-muted">© {{ current_year or 2025 }} College Portal</small>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Slide + fade out alerts after 4 seconds
+  window.setTimeout(function () {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function (alert) {
+      alert.classList.add('slide-fade-out');
+      setTimeout(() => {
+        let fade = new bootstrap.Alert(alert);
+        fade.close();
+      }, 600); // match the CSS transition time
+    });
+  }, 4000);
+</script>
+
+
+</body>
+</html>
+
+
+

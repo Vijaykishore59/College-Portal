@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Question (Test ID {{ test_id }})</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f5f5f5;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #004c99;
+        }
+        .add-more {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #0066cc;
+            font-weight: bold;
+        }
+        .add-more:hover {
+            text-decoration: underline;
+        }
+        .disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Edit Question (Test ID {{ test_id }})</h2>
+
+    {% if can_edit %}
+    <form method="POST">
+        <label for="question">Question</label>
+        <input type="text" name="question" id="question" value="{{ question }}" required>
+
+        <label>Options</label>
+        {% for opt in options %}
+            <input type="text" name="options" value="{{ opt }}" required>
+        {% endfor %}
+
+        <label for="answer">Correct Answer</label>
+        <input type="text" name="answer" id="answer" value="{{ answer }}" required>
+
+        <button type="submit">✅ Update Question</button>
+    </form>
+    {% else %}
+    <p><strong>⚠️ This test is closed for editing as the deadline has passed.</strong></p>
+    {% endif %}
+
+    {% if total_qs and questions and questions|length < total_qs and can_edit %}
+        <a href="{{ url_for('add_question_page', test_id=test_id) }}" class="add-more">➕ Add New Question</a>
+    {% endif %}
+
+</body>
+</html>
+
+

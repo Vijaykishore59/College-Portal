@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Exam Stats</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 2rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: center; border: 1px solid #ccc; }
+        th { background-color: #f0f0f0; }
+        h2 { text-align: center; }
+    </style>
+</head>
+<body>
+    <h2>📊 My Exam Results</h2>
+    {% if stats %}
+    <table>
+        <thead>
+            <tr>
+                <th>Test</th>
+                <th>Score</th>
+                <th>Percentage</th>
+                <th>Attempt Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in stats %}
+            <tr>
+                <td>{{ s.category }}</td>
+                <td>{{ s.score }} / {{ s.total }}</td>
+                <td>{{ s.percentage }}%</td>
+                <td>{{ s.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No exams attempted yet.</p>
+    {% endif %}
+    <div style="text-align:center; margin-top: 20px;">
+        <a href="{{ url_for('student_dashboard') }}">🔙 Back to Dashboard</a>
+    </div>
+</body>
+</html>

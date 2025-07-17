@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="mb-4 text-center text-primary">🎓 Welcome, {{ session['username']|capitalize }}</h2>
+
+    {% if test_info %}
+        <div class="row g-4">
+            {% for t in test_info %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header text-white text-center 
+                        {% if t.category == 'aptitude' %}bg-primary
+                        {% elif t.category == 'verbal' %}bg-success
+                        {% elif t.category == 'communication' %}bg-warning
+                        {% else %}bg-secondary{% endif %}">
+                        <h5 class="mb-0">{{ t.category.capitalize() }}</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p>
+                            {% if t.category == 'aptitude' %}
+                                📊 Aptitude
+                            {% elif t.category == 'verbal' %}
+                                🧠 Verbal
+                            {% elif t.category == 'communication' %}
+                                💬 Communication
+                            {% else %}
+                                📘 {{ t.category.capitalize() }}
+                            {% endif %}
+                        </p>
+                        <p>Status:
+                            {% if t.attempted %}
+                                <span class="badge bg-success">Attempted</span>
+                            {% else %}
+                                <span class="badge bg-danger">Not Attempted</span>
+                            {% endif %}
+                        </p>
+                        <p>Duration: {{ t.duration }} mins</p>
+                        <p>{{ t.remaining_time }}</p>
+
+                        {% if t.attempted %}
+                            <a href="{{ url_for('exam_result', category=t.category) }}" class="btn btn-outline-info w-100">View Results</a>
+                        {% else %}
+                            <a href="{{ url_for('exam', category=t.category) }}" class="btn btn-success w-100">Start Test</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center mt-5" role="alert">
+            📢 No active tests available for now.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
