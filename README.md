@@ -31,6 +31,11 @@ A web-based portal for managing student aptitude exams, communication skill eval
 ---
 ## Demo Screenshots
 <img width="1884" height="910" alt="Screenshot 2025-07-18 010316" src="https://github.com/user-attachments/assets/452c9e73-d430-4b07-b1e7-7f1564b75bba" />
+<img width="1896" height="835" alt="Screenshot 2025-07-18 010352" src="https://github.com/user-attachments/assets/b4e76b05-2174-4f52-a5f2-7339ebb6e4c8" />
+<img width="1877" height="905" alt="Screenshot 2025-07-18 010455" src="https://github.com/user-attachments/assets/28617a25-0988-4f2f-997f-27fdd5e7f899" />
+<img width="1884" height="894" alt="Screenshot 2025-07-18 010555" src="https://github.com/user-attachments/assets/4c2b63e8-b12e-4009-b48e-145901f7f334" />
+
+
 
 ## 📁 Project Structure
 
