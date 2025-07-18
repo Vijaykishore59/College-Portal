@@ -56,7 +56,7 @@ college_portal/
 
 1. **Clone the Repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Vijaykishore59/College-Portal
    cd college_portal
    ```
 
